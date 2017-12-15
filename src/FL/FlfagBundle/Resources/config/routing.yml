@@ -1,0 +1,5 @@
+# src/FL/FlfagBundle/Resources/config/routing.yml
+
+medecin:
+    path:     /
+    defaults: { _controller:FLFlfagBundle:Cardio:index }

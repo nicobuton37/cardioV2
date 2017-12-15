@@ -1,0 +1,24 @@
+{# src/FL/FlfagBundle/Resources/views/layout.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+       Formulaire médecin
+    </div>
+    <div class="panel-body">
+      {% block body_doc %}
+      {% endblock %}
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+       Formulaire Staff
+    </div>
+    <div class="panel-body">
+      {% block body_staff %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

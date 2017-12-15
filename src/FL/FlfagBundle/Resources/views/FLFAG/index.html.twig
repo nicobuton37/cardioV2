@@ -1,0 +1,243 @@
+{# src/FL/FlfagBundle/Resources/views/FLFAG/index.html.twig #}
+
+{% extends 'FLFlfagBundle::layout.html.twig' %}
+
+{% block body_doc %}
+  <form action="index.html" method="post">
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Patient
+          </div>
+          <div class="panel-body">
+            <label for="firstname">Nom :</label>
+            <input type="text" name="firstname" class="form-control" value="">
+            <label for="name">Prénom :</label>
+            <input type="text" name="name" class="form-control" value="">
+            <label for="birthday">Date de naissance :</label>
+            <input type="date" name="birthday" class="form-control" id="datepicker" value="">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Médecins
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="firstname_doc">Nom :</label>
+                <input type="text" name="firstname_doc" class="form-control"  value="">
+                <label for="name_doc">Prénom :</label>
+                <input type="text" name="name_doc" class="form-control"  value="">
+                <label for="mail_doc">Email :</label>
+                <input type="text" name="mail_doc" class="form-control" value="">
+              </div>
+              <div class="col-sm-6">
+                <label for="specialite">Spécialité :</label>
+                <input type="text" name="specialite" class="form-control" value="">
+                <label for="cardio">Cardiologue référent :</label>
+                <input type="text" name="cardio" class="form-control" placeholder="Nom et Prénom" value="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <div class="panel panel-info form-group">
+          <div class="panel-heading">
+             Traitement actuel
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>Aspirine</td>
+                <td><input type="checkbox" class="right" value="aspirine" name="aspirine"></td>
+              </tr>
+              <tr>
+                <td>Thienopyridine</td>
+                <td><input type="checkbox" class="right" value="thieno" name="thieno"></td>
+              </tr>
+              <tr>
+                <td>AVK</td>
+                <td><input type="checkbox" class="right" value="avk" name="avk"></td>
+              </tr>
+              <tr>
+                <td>NACO</td>
+                <td><input type="checkbox" class="right" value="naco" name="naco"></td>
+              </tr>
+              <tr>
+                <td>Aucun</td>
+                <td><input type="checkbox" class="right" value="aucun" name="aucun"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Détails supplémentaires
+          </div>
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>Contre Indication à l'ETO</td>
+                <td><input type="checkbox" value="contre_eto" class="right" name="contre_eto"></td>
+              </tr>
+              <tr>
+                <td>filtre cave</td>
+                <td><input type="checkbox" value="filtre_cave" class="right" name="filtre_cave"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Score
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <table class="table">
+                  <th>Score de risque CHA²DSVASc</th>
+                  <tr>
+                    <td>Insuffisance cardiaque</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="insu_cardiaque" name="insu_cardiaque"></td>
+                  </tr>
+                  <tr>
+                    <td>HTA</td>
+                    <td class="score">1</td>
+                    <td><input class="right" data-value="1" type="checkbox" value="hta" name="hta"></td>
+                  </tr>
+                  <tr>
+                    <td>Age >= 75 ans </td>
+                    <td class="score">2</td>
+                    <td><input data-value="2" class="right" type="checkbox" value="age" name="age"></td>
+                  </tr>
+                  <tr>
+                    <td>Diabète</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="diabete" name="diabete"></td>
+                  </tr>
+                  <tr>
+                    <td>ATCD AIT ou AVC</td>
+                    <td class="score">2</td>
+                    <td><input  data-value="2" class="right" type="checkbox" value="atcd" name="atcd"></td>
+                  </tr>
+                  <tr>
+                    <td>Maladie vasculaire</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="vasculaire" name="vasculaire"></td>
+                  </tr>
+                  <tr>
+                    <td>Age 65-74 ans</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="age_tranche" name="age_tranche"></td>
+                  </tr>
+                  <tr>
+                    <td>Sexe féminin</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="femme" name="femme"></td>
+                  </tr>
+                  <tr>
+                    <td class="empty">/</td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td id="totalCha" class="score">100</td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-sm-6">
+                <table class="table">
+                  <th>Score de risque HASBLED</th>
+                  <tr>
+                    <td>HTA</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="hta_has" name="hta_has"></td>
+                  </tr>
+                  <tr>
+                    <td>Insuffisance hépatique</td>
+                    <td class="score">2</td>
+                    <td><input data-value="2" class="right" type="checkbox" value="insu_hepatique" name="insu_hepatique"></td>
+                  </tr>
+                  <tr>
+                    <td>Insufisance rénale</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="insu_renale" name="insu_renale"></td>
+                  </tr>
+                  <tr>
+                    <td>ATCD AIT ou AVC</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="ait_avc" name="ait_avc"></td>
+                  </tr>
+                  <tr>
+                    <td>Saignement</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="saignement" name="saignement"></td>
+                  </tr>
+                  <tr>
+                    <td>INR labile</td>
+                    <td class="score">2</td>
+                    <td><input data-value="2" class="right" type="checkbox" value="inr" name="inr"></td>
+                  </tr>
+                  <tr>
+                    <td>Age >= 65 ans</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="age_has" name="age_has"></td>
+                  </tr>
+                  <tr>
+                    <td>Alcool</td>
+                    <td class="score">1</td>
+                    <td><input data-value="1" class="right" type="checkbox" value="alcool" name="alcool"></td>
+                  </tr>
+                  <tr>
+                    <td>AINS</td>
+                    <td class="score">2</td>
+                    <td><input data-value="2" class="right" type="checkbox" value="ains" name="ains"></td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td id="totalHas" class="score">2000</td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        Précisions sur l'histoire neurologique et hémorrogique :
+      </div>
+      <div class="panel-body">
+        <textarea name="neuro_hemo" rows="8" cols="80" class="form-control" placeholder="Indiquez les précisions sur l'histoire ici"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Email du destinataire">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <input type="submit" class="btn btn-success staff_button right value="Envoyer au staff">
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block body_staff %}
+
+{% endblock %}
