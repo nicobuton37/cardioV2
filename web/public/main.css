@@ -1,0 +1,60 @@
+/* GENERAL */
+
+body {
+    background-color: #102D6B;
+}
+
+.page-header {
+    border: 0px;
+}
+
+.right {
+    float: right;
+}
+
+div.panel-heading {
+    font-size: 1.2em;
+}
+
+.panel-info {
+    border-color: #DDD;
+}
+
+h1 {
+    color: #FFFFFF;
+}
+
+.panel-info > .panel-heading {
+    background-color: #102D6B;
+    color: #FFFFFF;
+    border-color: #DDD;
+}
+
+.score {
+    border-left: 1px solid #c7c9cc;
+    border-right: 1px solid #c7c9cc;
+    border-bottom: 1px solid #c7c9cc;
+    text-align: center;
+    font-weight: bold;
+    height: 20px;
+    color: #102D6B;
+}
+
+/* Score Title */
+
+th {
+    font-size: 1.1em;
+    color: #102D6B;
+    font-weight: bold;
+}
+
+td, th {
+  border-top:  1px solid #c7c9cc;
+  border-left:  1px solid #c7c9cc;
+  border-right:  1px solid #c7c9cc;
+  border-bottom:  1px solid #c7c9cc;
+}
+
+tr .empty {
+  background: #c7c9cc;
+}
