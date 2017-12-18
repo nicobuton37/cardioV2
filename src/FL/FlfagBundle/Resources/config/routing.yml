@@ -1,5 +1,17 @@
 # src/FL/FlfagBundle/Resources/config/routing.yml
 
-medecin:
+index:
     path:     /
     defaults: { _controller:FLFlfagBundle:Cardio:index }
+
+transit:
+    path:     /transit
+    defaults: { _controller:FLFlfagBundle:Cardio:transit }
+
+toDoctor:
+    path:     /doc/{patientId}/{staffId}
+    defaults: { _controller:FLFlfagBundle:Cardio:toDoctor }
+
+toStaff:
+    path:     /staff/{patientId}
+    defaults: { _controller:FLFlfagBundle:Cardio:toStaff }
