@@ -12,6 +12,7 @@ class CardioController extends Controller
 
   public function indexAction()
   {
+    $em = $this->getDoctrine()->getManager();
     return $this->render('FLFlfagBundle:FLFAG:index.html.twig');
   }
 }
