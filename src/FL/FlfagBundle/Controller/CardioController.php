@@ -3,6 +3,8 @@
 
 namespace FL\FlfagBundle\Controller;
 
+use FL\FlfagBundle\Entity\Has;
+use FL\FlfagBundle\Entity\Doctor;
 use FL\FlfagBundle\Entity\Patient;
 use FL\FlfagBundle\Entity\Cha;
 use FL\FlfagBundle\Entity\Traitement;
@@ -66,6 +68,8 @@ class CardioController extends Controller
 
   public function doctorTransitControl($request)
   {
+    $transit = $this->container->get("fl_flfag.transit");
+    $transit->controlDoctor($request);
     // docDatas
     $firstname_doc = $request->get("firstname_doc");
     $name_doc = $request->get("name_doc");
@@ -73,6 +77,13 @@ class CardioController extends Controller
     $cardio = $request->get("cardio");
     $specialite = $request->get("specialite");
     $mail_doc = $request->get("mail_doc");
+
+    $this->flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc);
+
+  }
+
+  public function flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc)
+  {
 
   }
 
@@ -233,13 +244,81 @@ class CardioController extends Controller
     $age_has = $request->get("age_has");
     $alcool = $request->get("alcool");
     $ains = $request->get("ains");
+
+    $this->flushHasDatas($hta_has, $insu_hepatique, $insu_renale, $ait_avc, $saignement, $inr, $age_has, $alcool, $ains);
   }
 
+  public function flushHasDatas($hta_has, $insu_hepatique, $insu_renale, $ait_avc, $saignement, $inr, $age_has, $alcool, $ains)
+  {
+    $has = new Has();
 
+    if ($hta_has == null) {
+      $hta_has = 0;
+    }else {
+      $hta_has = 1;
+    }
+    if ($insu_hepatique == null) {
+      $insu_hepatique = 0;
+    }else {
+      $insu_hepatique = 1;
+    }
+    if ($insu_renale == null) {
+      $insu_renale = 0;
+    }else {
+      $insu_renale = 1;
+    }
+    if ($ait_avc == null) {
+      $ait_avc = 0;
+    }else {
+      $ait_avc = 1;
+    }
+    if ($saignement == null) {
+      $saignement = 0;
+    }else {
+      $saignement = 1;
+    }
+    if ($inr == null) {
+      $inr = 0;
+    }else {
+      $inr = 1;
+    }
+    if ($age_has == null) {
+      $age_has = 0;
+    }else {
+      $age_has = 1;
+    }
+    if ($alcool == null) {
+      $alcool = 0;
+    }else {
+      $alcool = 1;
+    }
+    if ($ains == null) {
+      $ains = 0;
+    }else {
+      $ains = 1;
+    }
+
+    $has->setHtaHas($hta_has);
+    $has->setInsuHepatique($insu_hepatique);
+    $has->setInsuRenale($insu_renale);
+    $has->setAitAvc($ait_avc);
+    $has->setSaignement($saignement);
+    $has->setInr($inr);
+    $has->setAgeHas($age_has);
+    $has->setAlcool($alcool);
+    $has->setAins($ains);
+
+    dump($has);
+
+    // $em = $this->getDoctrine()->getManager();
+    // $em->persist($has);
+    // $em->flush();
+  }
 
   public function flushPatientDatas($firstname, $name, $birthday, $neuro_hemo)
   {
     $em = $this->getDoctrine()->getManager();
 
   }
+
 }
