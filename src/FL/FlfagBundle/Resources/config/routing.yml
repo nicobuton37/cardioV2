@@ -15,3 +15,7 @@ toDoctor:
 toStaff:
     path:     /staff/{patientId}
     defaults: { _controller:FLFlfagBundle:Cardio:toStaff }
+
+archive:
+    path:     /archive/{patientId}/{staffId}
+    defaults: { _controller:FLFlfagBundle:Cardio:archive }
