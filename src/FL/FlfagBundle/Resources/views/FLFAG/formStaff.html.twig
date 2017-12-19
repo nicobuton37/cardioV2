@@ -1,0 +1,126 @@
+{# src/FL/FlfagBundle/Resources/views/FLFAG/formStaff.html.twig #}
+
+<form action="index.html" method="post">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      Décision du staff
+    </div>
+    <div class="panel-body">
+      <div class="row form-group">
+        <div class="col-sm-6">
+          <label for="staff_date">Date du staff :</label>
+          <input type="date" id="datepicker" name="staff_date" value="">
+        </div>
+        <div class="col-sm-6">
+          <label for="close">Eligible à la fermeture :</label>
+          <div class="btn-group" data-toggle="buttons">
+              <input type="radio" name="close" value="oui"> OUI
+              <input type="radio" name="close" value="non"> NON
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-6">
+          <label for="examen">Examens / Avis conditionnant la décision :</label>
+          <textarea name="examen" rows="8" cols="80" class="form-control"></textarea>
+        </div>
+        <div class="col-sm-6">
+          <label for="post_op">Gestion prévisible et durée du traitement AAP / AVK en post-op :</label>
+          <textarea name="post_op" rows="8" cols="80" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-6">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+               Examens à programmer avant fermeture
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <td>Cs anesthésie</td>
+                  <td><input type="checkbox" value="anesthesie" name="anesthesie" class="right"></td>
+                </tr>
+                <tr>
+                  <td>ETO</td>
+                  <td><input type="checkbox" value="eto_close" class="right" name="eto_close"></td>
+                </tr>
+                <tr>
+                  <td>TDM coeur</td>
+                  <td><input type="checkbox" value="tdm_coeur" class="right" name="tdm_coeur"></td>
+                </tr>
+                <tr>
+                  <td>TDM cérébral / IRM</td>
+                  <td><input type="checkbox" value="tdm_cerebral" class="right" name="tdm_cerebral"></td>
+                </tr>
+                <tr>
+                  <td>Avis gériatrique</td>
+                  <td><input type="checkbox" value="geriatrique" class="right" name="geriatrique"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              Suivi post implantation
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <td>ETO</td>
+                  <td>
+                    <div class="right">
+                      <input type="radio" name="eto_imp" value="1 mois" autocomplete="off"> 1 mois
+                      <input type="radio" name="eto_imp" value="3 mois" autocomplete="off"> 3 mois
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ETT</td>
+                  <td>
+                    <div class="right">
+                      <input type="radio" name="ett_imp" value="1 mois" autocomplete="off"> 1 mois
+                      <input type="radio" name="ett_imp" value="3 mois" autocomplete="off"> 3 mois
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Scanner cardiaque</td>
+                  <td>
+                    <div class="right">
+                      <input type="radio" name="scanner" value="1 mois" autocomplete="off"> 1 mois
+                      <input type="radio" name="scanner" value="3 mois" autocomplete="off"> 3 mois
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Cs neuro</td>
+                  <td>
+                    <div class="right">
+                      <input type="radio" name="cs_neuro" value="1 mois" autocomplete="off"> 1 mois
+                      <input type="radio" name="cs_neuro" value="3 mois" autocomplete="off"> 3 mois
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Cs cardio</td>
+                  <td>
+                    <div class="right">
+                      <input type="radio" name="cs_cardio" value="1 mois" autocomplete="off"> 1 mois
+                      <input type="radio" name="cs_cardio" value="3 mois" autocomplete="off"> 3 mois
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-success right" value="Envoyer">
+      </div>
+    </div>
+  </div>
+</form>
