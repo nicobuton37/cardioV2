@@ -3,6 +3,8 @@
 
 namespace FL\FlfagBundle\Transit;
 
+use FL\FlfagBundle\Entity\Patient;
+
 class FLTransit
 {
   
