@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Patient
 {
     /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Doctor", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $doctor;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -36,9 +42,9 @@ class Patient
     private $name;
 
     /**
-     * @var \Date
+     * @var \DateTime
      *
-     * @ORM\Column(name="birthday", type="Date")
+     * @ORM\Column(name="birthday", type="date")
      */
     private $birthday;
 
@@ -48,27 +54,6 @@ class Patient
      * @ORM\Column(name="neuro_hemo", type="string", length=255)
      */
     private $neuroHemo;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="traitment_id", type="integer")
-     */
-    private $traitmentId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="cha_id", type="integer")
-     */
-    private $chaId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="has_id", type="integer")
-     */
-    private $hasId;
 
 
     /**
@@ -132,7 +117,7 @@ class Patient
     /**
      * Set birthday
      *
-     * @param \Date $birthday
+     * @param \DateTime $birthday
      *
      * @return Patient
      */
@@ -146,7 +131,7 @@ class Patient
     /**
      * Get birthday
      *
-     * @return \Date
+     * @return \DateTime
      */
     public function getBirthday()
     {
@@ -177,75 +162,14 @@ class Patient
         return $this->neuroHemo;
     }
 
-    /**
-     * Set traitmentId
-     *
-     * @param integer $traitmentId
-     *
-     * @return Patient
-     */
-    public function setTraitmentId($traitmentId)
+    public function getDoctor()
     {
-        $this->traitmentId = $traitmentId;
-
-        return $this;
+      return $this->doctor;
     }
 
-    /**
-     * Get traitmentId
-     *
-     * @return int
-     */
-    public function getTraitmentId()
+    public function setDoctor(Doctor $doctor = null)
     {
-        return $this->traitmentId;
+      $this->doctor = $doctor;
     }
 
-    /**
-     * Set chaId
-     *
-     * @param integer $chaId
-     *
-     * @return Patient
-     */
-    public function setChaId($chaId)
-    {
-        $this->chaId = $chaId;
-
-        return $this;
-    }
-
-    /**
-     * Get chaId
-     *
-     * @return int
-     */
-    public function getChaId()
-    {
-        return $this->chaId;
-    }
-
-    /**
-     * Set hasId
-     *
-     * @param integer $hasId
-     *
-     * @return Patient
-     */
-    public function setHasId($hasId)
-    {
-        $this->hasId = $hasId;
-
-        return $this;
-    }
-
-    /**
-     * Get hasId
-     *
-     * @return int
-     */
-    public function getHasId()
-    {
-        return $this->hasId;
-    }
 }

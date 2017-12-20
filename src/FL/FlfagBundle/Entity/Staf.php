@@ -49,27 +49,6 @@ class Staf
      */
     private $postOp;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="patient_id", type="integer")
-     */
-    private $patientId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="post_close_id", type="integer")
-     */
-    private $postCloseId;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="post_imp_id", type="integer")
-     */
-    private $postImpId;
-
 
     /**
      * Get id
@@ -175,78 +154,6 @@ class Staf
     public function getPostOp()
     {
         return $this->postOp;
-    }
-
-    /**
-     * Set patientId
-     *
-     * @param integer $patientId
-     *
-     * @return Staf
-     */
-    public function setPatientId($patientId)
-    {
-        $this->patientId = $patientId;
-
-        return $this;
-    }
-
-    /**
-     * Get patientId
-     *
-     * @return int
-     */
-    public function getPatientId()
-    {
-        return $this->patientId;
-    }
-
-    /**
-     * Set postCloseId
-     *
-     * @param integer $postCloseId
-     *
-     * @return Staf
-     */
-    public function setPostCloseId($postCloseId)
-    {
-        $this->postCloseId = $postCloseId;
-
-        return $this;
-    }
-
-    /**
-     * Get postCloseId
-     *
-     * @return int
-     */
-    public function getPostCloseId()
-    {
-        return $this->postCloseId;
-    }
-
-    /**
-     * Set postImpId
-     *
-     * @param integer $postImpId
-     *
-     * @return Staf
-     */
-    public function setPostImpId($postImpId)
-    {
-        $this->postImpId = $postImpId;
-
-        return $this;
-    }
-
-    /**
-     * Get postImpId
-     *
-     * @return int
-     */
-    public function getPostImpId()
-    {
-        return $this->postImpId;
     }
 }
 

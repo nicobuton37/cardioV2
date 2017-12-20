@@ -63,13 +63,6 @@ class Doctor
      */
     private $mailDoc;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="patient_id", type="integer")
-     */
-    private $patientId;
-
 
     /**
      * Get id
@@ -223,30 +216,6 @@ class Doctor
     public function getMailDoc()
     {
         return $this->mailDoc;
-    }
-
-    /**
-     * Set patientId
-     *
-     * @param integer $patientId
-     *
-     * @return Doctor
-     */
-    public function setPatientId($patientId)
-    {
-        $this->patientId = $patientId;
-
-        return $this;
-    }
-
-    /**
-     * Get patientId
-     *
-     * @return int
-     */
-    public function getPatientId()
-    {
-        return $this->patientId;
     }
 }
 

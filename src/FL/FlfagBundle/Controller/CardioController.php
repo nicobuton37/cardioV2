@@ -78,13 +78,26 @@ class CardioController extends Controller
     $specialite = $request->get("specialite");
     $mail_doc = $request->get("mail_doc");
 
-    $this->flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc);
+    $this->flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc );
 
   }
 
-  public function flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc)
+  public function flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc )
   {
+    $doctor = new Doctor();
+    $doctor->setFirstnameDoc($firstname_doc);
+    $doctor->setNameDoc($name_doc);
+    $doctor->setMail($mail);
+    $doctor->setCardio($cardio);
+    $doctor->setSpecialite($specialite);
+    $doctor->setMailDoc($mail_doc);
 
+
+    dump($doctor);
+    // $em = $this->getDoctrine()->getManager();
+    //
+    // $em->persist($doctor);
+    // $em->flush();
   }
 
   public function flushTraitementDatas($aspirine, $thieno, $avk, $naco, $aucun, $contre_eto, $filtre_cave)
