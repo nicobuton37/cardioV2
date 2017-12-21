@@ -4,9 +4,13 @@ index:
     path:     /
     defaults: { _controller:FLFlfagBundle:Cardio:index }
 
-transit:
-    path:     /transit
-    defaults: { _controller:FLFlfagBundle:Cardio:transit }
+transit_doctor:
+    path:     /transitDoc
+    defaults: { _controller:FLFlfagBundle:Cardio:transitDoctor }
+
+transit_staff:
+    path:     /transitStaff
+    defaults: { _controller:FLFlfagBundle:Cardio:transitStaff }
 
 toDoctor:
     path:     /doc/{patientId}/{staffId}

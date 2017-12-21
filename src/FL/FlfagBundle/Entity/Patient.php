@@ -19,6 +19,25 @@ class Patient
     private $doctor;
 
     /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Traitement", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $traitement;
+
+    /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Cha", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $cha;
+
+    /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Has", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $has;
+
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -172,4 +191,35 @@ class Patient
       $this->doctor = $doctor;
     }
 
+    public function getTraitement()
+    {
+      return $this->traitement;
+    }
+
+    public function setTraitement(Traitement $traitement = null)
+    {
+      $this->traitement = $traitement;
+    }
+
+    public function getCha()
+    {
+      return $this->cha;
+    }
+
+    public function setCha(Cha $cha = null)
+    {
+      $this->cha = $cha;
+    }
+
+    public function getHas()
+    {
+      return $this->has;
+    }
+
+    public function setHas(Has $has = null)
+    {
+      $this->has = $has;
+    }
+
+    
 }

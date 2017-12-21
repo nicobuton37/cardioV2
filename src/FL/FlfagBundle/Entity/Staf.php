@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Staf
 {
     /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_close", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $postClose;
+
+    /**
+    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_close", cascade={"persist"})
+    *@ORM\JoinColumn(nullable=false)
+    */
+    private $postImp;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -155,5 +167,24 @@ class Staf
     {
         return $this->postOp;
     }
-}
 
+    public function getPostClose()
+    {
+      return $this->postClose;
+    }
+
+    public function setPostClose(PostClose $postClose = null)
+    {
+      $this->postClose = $postClose;
+    }
+
+    public function getPostImp()
+    {
+      return $this->postImp;
+    }
+
+    public function setPostImp(PostImp $postImp = null)
+    {
+      $this->postImp = $postImp;
+    }
+}

@@ -22,16 +22,17 @@ class CardioController extends Controller
     return $this->render('FLFlfagBundle:FLFAG:index.html.twig');
   }
 
-  public function transitAction(Request $request)
+  public function transitDoctorAction(Request $request)
   {
 
-    $this->traitementTransitControl($request);
-    $this->chaTransitControl($request);
-    $this->hasTransitControl($request);
-    $this->doctorTransitControl($request);
-    $this->patientTransitControl($request);
+    $this->addPatientAction($request);
 
-    return $this->render('FLFlfagBundle:FLFAG:transit.html.twig');
+    return $this->render('FLFlfagBundle:FLFAG:transitDoctor.html.twig');
+  }
+
+  public function transitStaffAction()
+  {
+    return $this->render('FLFlfagBundle:FLFAG:transitStaff.html.twig');
   }
 
   public function toDoctorAction($patientId, $staffId)
@@ -54,23 +55,11 @@ class CardioController extends Controller
   }
 
   // Request
-
-  public function patientTransitControl($request)
+  public function addPatientAction($request)
   {
-    // patientDatas
-    $firstname = $request->get("firstname");
-    $name = $request->get("name");
-    $birthday = $request->get("birthday");
-    $neuro_hemo = $request->get("neuro_hemo");
-
-    // dump($firstname, $name, $birthday, $neuro_hemo);
-  }
-
-  public function doctorTransitControl($request)
-  {
-    $transit = $this->container->get("fl_flfag.transit");
-    $transit->controlDoctor($request);
-    // docDatas
+    $em = $this->getDoctrine()->getManager();
+    $patient = new Patient();
+    // get doctor form
     $firstname_doc = $request->get("firstname_doc");
     $name_doc = $request->get("name_doc");
     $mail = $request->get("mail");
@@ -78,12 +67,6 @@ class CardioController extends Controller
     $specialite = $request->get("specialite");
     $mail_doc = $request->get("mail_doc");
 
-    $this->flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc );
-
-  }
-
-  public function flushDoctorDatas($firstname_doc, $name_doc, $mail, $cardio, $specialite, $mail_doc )
-  {
     $doctor = new Doctor();
     $doctor->setFirstnameDoc($firstname_doc);
     $doctor->setNameDoc($name_doc);
@@ -91,75 +74,9 @@ class CardioController extends Controller
     $doctor->setCardio($cardio);
     $doctor->setSpecialite($specialite);
     $doctor->setMailDoc($mail_doc);
+    $patient->setDoctor($doctor);
+    $em->persist($doctor);
 
-
-    dump($doctor);
-    // $em = $this->getDoctrine()->getManager();
-    //
-    // $em->persist($doctor);
-    // $em->flush();
-  }
-
-  public function flushTraitementDatas($aspirine, $thieno, $avk, $naco, $aucun, $contre_eto, $filtre_cave)
-  {
-
-    $traitement = new Traitement();
-
-    if($aspirine == null){
-      $aspirine = 0;
-    }else {
-      $aspirine = 1;
-    }
-    if ($thieno == null) {
-      $thieno = 0;
-    }else {
-      $thieno = 1;
-    }
-    if ($avk == null) {
-      $avk = 0;
-    }else {
-      $avk = 1;
-    }
-    if ($naco == null) {
-      $naco = 0;
-    }else {
-      $naco = 1;
-    }
-    if ($aucun == null) {
-      $aucun = 0;
-    }else {
-      $aucun = 1;
-    }
-    if ($contre_eto == null) {
-      $contre_eto = 0;
-    }else {
-      $contre_eto = 1;
-    }
-    if ($filtre_cave == null) {
-      $filtre_cave = 0;
-    }else {
-      $filtre_cave = 1;
-    }
-
-    $traitement->setAspirine($aspirine);
-    $traitement->setThieno($thieno);
-    $traitement->setAvk($avk);
-    $traitement->setNaco($naco);
-    $traitement->setAucun($aucun);
-    $traitement->setContreEto($contre_eto);
-    $traitement->setFiltreCave($filtre_cave);
-
-    // dump($traitement);
-    $em = $this->getDoctrine()->getManager();
-
-    // $em->persist($traitement);
-    //
-    // $em->flush();
-  }
-
-  public function traitementTransitControl($request)
-  {
-    // traitementDatas
     $aspirine = $request->get("aspirine");
     $thieno = $request->get("thieno");
     $avk = $request->get("avk");
@@ -168,11 +85,18 @@ class CardioController extends Controller
     $contre_eto = $request->get("contre_eto");
     $filtre_cave = $request->get("filtre_cave");
 
-    $this->flushTraitementDatas($aspirine, $thieno, $avk, $naco, $aucun, $contre_eto, $filtre_cave);
-  }
+    $traitement = new Traitement();
+    $aspirine == null ? $traitement->setAspirine(0) : $traitement->setAspirine(1);
+    $thieno == null ? $traitement->setThieno(0) : $traitement->setThieno(1);
+    $avk == null ? $traitement->setAvk(0) : $traitement->setAvk(1);
+    $naco == null ? $traitement->setNaco(0) : $traitement->setNaco(1);
+    $aucun == null ? $traitement->setAucun(0) : $traitement->setAucun(1);
+    $contre_eto == null ? $traitement->setContreEto(0) : $traitement->setContreEto(1);
+    $filtre_cave == null ? $traitement->setFiltreCave(0) : $traitement->setFiltreCave(1);
+    $patient->setTraitement($traitement);
+    $em->persist($traitement);
 
-  public function chaTransitControl($request)
-  {
+    $cha = new Cha();
     $insu_cardiaque = $request->get("insu_cardiaque");
     $hta = $request->get("hta");
     $age = $request->get("age");
@@ -182,74 +106,20 @@ class CardioController extends Controller
     $age_tranche = $request->get("age_tranche");
     $femme = $request->get("femme");
 
-    $this->flushChaDatas($insu_cardiaque, $hta, $age, $diabete, $atcd, $vasculaire, $age_tranche, $femme);
-  }
+    $insu_cardiaque == null ? $cha->setInsuCardiaque(0) : $cha->setInsuCardiaque(1);
+    $hta == null ? $cha->setHta(0) : $cha->setHta(1);
+    $age == null ? $cha->setAge(0) : $cha->setAge(1);
+    $diabete == null ? $cha->setDiabete(0) : $cha->setDiabete(1);
+    $atcd == null ? $cha->setAtcd(0) : $cha->setAtcd(1);
+    $vasculaire == null ? $cha->setVasculaire(0) : $cha->setVasculaire(1);
+    $age_tranche == null ? $cha->setAgeTranche(0) : $cha->setAgeTranche(1);
+    $femme == null ? $cha->setFemme(0) : $cha->setFemme(1);
+    $patient->setCha($cha);
+    $em->persist($cha);
 
-  public function flushChaDatas($insu_cardiaque, $hta, $age, $diabete, $atcd, $vasculaire, $age_tranche, $femme)
-  {
-    $cha = new Cha();
-
-    if ($insu_cardiaque == null) {
-      $insu_cardiaque = 0;
-    }else {
-      $insu_cardiaque = 1;
-    }
-    if ($hta == null) {
-      $hta = 0;
-    }else {
-      $hta = 1;
-    }
-    if ($age == null) {
-      $age = 0;
-    }else {
-      $age = 1;
-    }
-    if ($diabete == null) {
-      $diabete = 0;
-    }else {
-      $diabete = 1;
-    }
-    if ($atcd == null) {
-      $atcd = 0;
-    }else {
-      $atcd = 1;
-    }
-    if ($vasculaire == null) {
-      $vasculaire = 0;
-    }else {
-      $vasculaire = 1;
-    }
-    if ($age_tranche == null) {
-      $age_tranche = 0;
-    }else {
-      $age_tranche = 1;
-    }
-    if ($femme == null) {
-      $femme = 0;
-    }else {
-      $femme = 1;
-    }
-
-    $cha->setInsuCardiaque($insu_cardiaque);
-    $cha->setHta($hta);
-    $cha->setAge($age);
-    $cha->setDiabete($diabete);
-    $cha->setAtcd($atcd);
-    $cha->setVasculaire($vasculaire);
-    $cha->setAgeTranche($age_tranche);
-    $cha->setFemme($femme);
-
-    dump($cha);
-    $em = $this->getDoctrine()->getManager();
-
-    // $em->persist($cha);
-    // $em->flush();
-  }
-
-  public function hasTransitControl($request)
-  {
+    $has = new Has();
     $hta_has = $request->get("hta_has");
-    $insu_hepatique = $request->get("insu_hepatique");
+    $insu_hepatique = $request->get("insu-hepatique");
     $insu_renale = $request->get("insu_renale");
     $ait_avc = $request->get("ait_avc");
     $saignement = $request->get("saignement");
@@ -258,80 +128,40 @@ class CardioController extends Controller
     $alcool = $request->get("alcool");
     $ains = $request->get("ains");
 
-    $this->flushHasDatas($hta_has, $insu_hepatique, $insu_renale, $ait_avc, $saignement, $inr, $age_has, $alcool, $ains);
-  }
+    $hta_has == null ? $has->setHtaHas(0) : $has->setHtaHas(1);
+    $insu_hepatique == null ? $has->setInsuHepatique(0) : $has->setInsuHepatique(1);
+    $insu_renale == null ? $has->setInsuRenale(0) : $has->setInsuRenale(1);
+    $ait_avc == null ? $has->setAitAvc(0) : $has->setAitAvc(1);
+    $saignement == null ? $has->setSaignement(0) : $has->setSaignement(1);
+    $inr == null ? $has->setInr(0) : $has->setInr(1);
+    $age_has == null ? $has->setAgeHas(0) : $has->setAgeHas(1);
+    $alcool == null ? $has->setAlcool(0) : $has->setAlcool(1);
+    $ains == null ? $has->setAins(0) : $has->setAins(1);
+    $patient->setHas($has);
+    $em->persist($has);
 
-  public function flushHasDatas($hta_has, $insu_hepatique, $insu_renale, $ait_avc, $saignement, $inr, $age_has, $alcool, $ains)
-  {
-    $has = new Has();
+    $firstname = $request->get("firstname");
+    $name = $request->get("name");
+    $date = $request->get("birthday");
+    $birthday = date_create_from_format('Y-m-d', $date);
+    $neuro_hemo = $request->get("neuro_hemo");
 
-    if ($hta_has == null) {
-      $hta_has = 0;
-    }else {
-      $hta_has = 1;
-    }
-    if ($insu_hepatique == null) {
-      $insu_hepatique = 0;
-    }else {
-      $insu_hepatique = 1;
-    }
-    if ($insu_renale == null) {
-      $insu_renale = 0;
-    }else {
-      $insu_renale = 1;
-    }
-    if ($ait_avc == null) {
-      $ait_avc = 0;
-    }else {
-      $ait_avc = 1;
-    }
-    if ($saignement == null) {
-      $saignement = 0;
-    }else {
-      $saignement = 1;
-    }
-    if ($inr == null) {
-      $inr = 0;
-    }else {
-      $inr = 1;
-    }
-    if ($age_has == null) {
-      $age_has = 0;
-    }else {
-      $age_has = 1;
-    }
-    if ($alcool == null) {
-      $alcool = 0;
-    }else {
-      $alcool = 1;
-    }
-    if ($ains == null) {
-      $ains = 0;
-    }else {
-      $ains = 1;
-    }
+    $patient->setFirstname($firstname);
+    $patient->setName($name);
+    $patient->setBirthday($birthday);
+    $patient->setNeuroHemo($neuro_hemo);
 
-    $has->setHtaHas($hta_has);
-    $has->setInsuHepatique($insu_hepatique);
-    $has->setInsuRenale($insu_renale);
-    $has->setAitAvc($ait_avc);
-    $has->setSaignement($saignement);
-    $has->setInr($inr);
-    $has->setAgeHas($age_has);
-    $has->setAlcool($alcool);
-    $has->setAins($ains);
-
-    dump($has);
-
-    // $em = $this->getDoctrine()->getManager();
-    // $em->persist($has);
+    $em->persist($patient);
+    $this->getPatientId($patient);
     // $em->flush();
+
+
   }
 
-  public function flushPatientDatas($firstname, $name, $birthday, $neuro_hemo)
+  public function getPatientId($patient)
   {
-    $em = $this->getDoctrine()->getManager();
+    $patientId = $this->getDoctrine()->getManager();
 
+      dump($patient->getName());
   }
-
 }

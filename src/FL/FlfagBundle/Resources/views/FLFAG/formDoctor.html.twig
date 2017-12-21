@@ -1,6 +1,6 @@
 {# src/FL/FlfagBundle/Resources/views/formDoctor.html.twig #}
 
-<form action="{{ path("transit") }}" method="post">
+<form action="{{ path("transit_doctor") }}" method="post">
   <div class="row form-group">
     <div class="col-sm-4">
       <div class="panel panel-info">
@@ -225,7 +225,7 @@
   <div class="row">
     <div class="col-sm-8">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Email du destinataire">
+        <input type="text" class="form-control" name="mail" placeholder="Email du destinataire">
       </div>
     </div>
     <div class="col-sm-4">
