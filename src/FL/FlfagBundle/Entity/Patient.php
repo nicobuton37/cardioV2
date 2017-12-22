@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Patient
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
     *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Doctor", cascade={"persist"})
     *@ORM\JoinColumn(nullable=false)
     */
@@ -35,16 +44,6 @@ class Patient
     *@ORM\JoinColumn(nullable=false)
     */
     private $has;
-
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -73,6 +72,13 @@ class Patient
      * @ORM\Column(name="neuro_hemo", type="string", length=255)
      */
     private $neuroHemo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codePatient", type="string", length=255)
+     */
+    private $codePatient;
 
 
     /**
@@ -181,6 +187,30 @@ class Patient
         return $this->neuroHemo;
     }
 
+    /**
+     * Set codePatient
+     *
+     * @param string $codePatient
+     *
+     * @return Patient
+     */
+    public function setCodePatient($codePatient)
+    {
+        $this->codePatient = $codePatient;
+
+        return $this;
+    }
+
+    /**
+     * Get codePatient
+     *
+     * @return string
+     */
+    public function getCodePatient()
+    {
+        return $this->codePatient;
+    }
+
     public function getDoctor()
     {
       return $this->doctor;
@@ -191,7 +221,7 @@ class Patient
       $this->doctor = $doctor;
     }
 
-    public function getTraitement()
+    public function getTraitment()
     {
       return $this->traitement;
     }
@@ -213,13 +243,11 @@ class Patient
 
     public function getHas()
     {
-      return $this->has;
+      return $this->cha;
     }
 
     public function setHas(Has $has = null)
     {
       $this->has = $has;
     }
-
-    
 }

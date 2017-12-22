@@ -11,28 +11,35 @@ use FL\FlfagBundle\Entity\Traitement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 class CardioController extends Controller
 {
 
 // views
-  public function indexAction()
+  public function indexAction(Request $request)
   {
+    if($request->isMethod('POST')){
+      $this->addPatientAction($request);
+      die();
+      return $this->redirectToRoute('transit_staff');
+    }else{
+      return $this->render('FLFlfagBundle:FLFAG:index.html.twig');
+    }
+  }
 
-    return $this->render('FLFlfagBundle:FLFAG:index.html.twig');
+  public function transitStaffAction(Request $request)
+  {
+    if($request->isMethod("POST")){
+      return $this->redirectToRoute('FLFlfagBundle:FLFAG:staff.html.twig');
+    }else{
+      return $this->render('FLFlfagBundle:FLFAG:transitStaff.html.twig');
+
+    }
   }
 
   public function transitDoctorAction(Request $request)
   {
-
-    $this->addPatientAction($request);
-
     return $this->render('FLFlfagBundle:FLFAG:transitDoctor.html.twig');
-  }
-
-  public function transitStaffAction()
-  {
-    return $this->render('FLFlfagBundle:FLFAG:transitStaff.html.twig');
   }
 
   public function toDoctorAction($patientId, $staffId)
@@ -57,6 +64,7 @@ class CardioController extends Controller
   // Request
   public function addPatientAction($request)
   {
+
     $em = $this->getDoctrine()->getManager();
     $patient = new Patient();
     // get doctor form
@@ -140,28 +148,42 @@ class CardioController extends Controller
     $patient->setHas($has);
     $em->persist($has);
 
+    $neuro_hemo = $request->get("neuro_hemo");
     $firstname = $request->get("firstname");
     $name = $request->get("name");
     $date = $request->get("birthday");
     $birthday = date_create_from_format('Y-m-d', $date);
-    $neuro_hemo = $request->get("neuro_hemo");
-
+    $codePatient = "codePatient";
+    $patient->setCodePatient($codePatient);
     $patient->setFirstname($firstname);
     $patient->setName($name);
     $patient->setBirthday($birthday);
     $patient->setNeuroHemo($neuro_hemo);
 
+
+
     $em->persist($patient);
-    $this->getPatientId($patient);
-    // $em->flush();
 
-
+    $this->getRandomCodePatient($patient);
   }
 
-  public function getPatientId($patient)
+
+  function getRandomCodePatient($patient)
   {
-    $patientId = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager();
+    $length = 10;
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $codePatient = '';
+    for ($i = 0; $i < $length; $i++) {
+        $codePatient .= $characters[rand(0, $charactersLength - 1)];
+    }
+    $patient->setCodePatient($codePatient);
+    dump($patient);
 
-      dump($patient->getName());
+    $em->persist($patient);
+    // $em->flush();
   }
+
+
 }
