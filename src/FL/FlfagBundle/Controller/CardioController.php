@@ -3,15 +3,17 @@
 
 namespace FL\FlfagBundle\Controller;
 
-use FL\FlfagBundle\Entity\Has;
-use FL\FlfagBundle\Entity\Doctor;
-use FL\FlfagBundle\Entity\Patient;
+
 use FL\FlfagBundle\Entity\Cha;
+use FL\FlfagBundle\Entity\Doctor;
+use FL\FlfagBundle\Entity\Has;
+use FL\FlfagBundle\Entity\Patient;
 use FL\FlfagBundle\Entity\Traitement;
+use FL\FlfagBundle\Repository\PatientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+
 class CardioController extends Controller
 {
 
@@ -19,171 +21,127 @@ class CardioController extends Controller
   public function indexAction(Request $request)
   {
     if($request->isMethod('POST')){
-      $this->addPatientAction($request);
-      die();
-      return $this->redirectToRoute('transit_staff');
-    }else{
-      return $this->render('FLFlfagBundle:FLFAG:index.html.twig');
+        $patient = new Patient();
+        $firstname = $request->get('firstname');
+        $name = $request->get('name');
+        $date = $request->get('birthday');
+        $birthday = date_create_from_format('Y-m-d', $date);
+        $neuro_hemo = $request->get('neuro_hemo');
+        $codePatient = $this->randomCodePatient();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $patient->setFirstname($firstname);
+        $patient->setName($name);
+        $patient->setBirthday($birthday);
+        $patient->setNeuroHemo($neuro_hemo);
+        $patient->setCodePatient($codePatient);
+
+        $this->setDoctorDatas($request, $patient);
+        $this->setTraitementDatas($request, $patient);
+        $this->setChaDatas($request, $patient);
+        $this->setHasDatas($request, $patient);
+
+//        $em->persist($patient);
+//        $em->flush();
+//        dump($patient);
+        return $this->redirectToRoute("toStaff", array('codePatient' => $codePatient));
     }
+    return $this->render("FLFlfagBundle:FLFAG:index.html.twig");
   }
 
-  public function transitStaffAction(Request $request)
+  public function toStaffAction($codePatient)
   {
-    if($request->isMethod("POST")){
-      return $this->redirectToRoute('FLFlfagBundle:FLFAG:staff.html.twig');
-    }else{
-      return $this->render('FLFlfagBundle:FLFAG:transitStaff.html.twig');
-
-    }
+        $em = $this->getDoctrine()->getManager();
+        $patient = $em->getRepository("FLFlfagBundle:Patient")->findOneBy(array("codePatient" => $codePatient));
+        $doctor = $em->getRepository("FLFlfagBundle:Doctor")->findOneBy(array("id" => $patient->getDoctor()));
+        $traitement = $em->getRepository("FLFlfagBundle:Traitement")->findOneBy(array("id" => $patient->getTraitement()));
+        $cha = $em->getRepository("FLFlfagBundle:Cha")->findOneBy(array('id' => $patient->getCha()));
+        $has = $em->getRepository("FLFlfagBundle:Has")->findOneBy(array('id' => $patient->getHas()));
+        return $this->render('FLFlfagBundle:FLFAG:toStaff.html.twig', array(
+            'patient' => $patient,
+            'doctor'  => $doctor,
+            'traitement' => $traitement,
+            'cha'   => $cha,
+            'has' => $has
+        ));
   }
 
-  public function transitDoctorAction(Request $request)
+  public function setDoctorDatas($request, Patient $patient)
   {
-    return $this->render('FLFlfagBundle:FLFAG:transitDoctor.html.twig');
+       $doctor = new Doctor();
+
+       $doctor->setFirstnameDoc($request->get('firstname_doc'));
+       $doctor->setNameDoc($request->get('name_doc'));
+       $doctor->setMailDoc($request->get('mail_doc'));
+       $doctor->setSpecialite($request->get('specialite'));
+       $doctor->setCardio($request->get('cardio'));
+       $doctor->setMail($request->get('mail'));
+
+       $patient->setDoctor($doctor);
+
   }
 
-  public function toDoctorAction($patientId, $staffId)
+  public function setTraitementDatas($request, Patient $patient)
   {
-    return $this->render('FLFlfagBundle:FLFAG:doctor.html.twig',
-      array(
-        'patientId' => $patientId,
-        'staffId' => $staffId
-      ));
-  }
-
-  public function toStaffAction($patientId)
-  {
-    return $this->render('FLFlfagBundle:FLFAG:staff.html.twig');
-  }
-
-  public function archiveAction($patientId, $staffId)
-  {
-    return $this->render('FLFlfagBundle:FLFAG:archive.html.twig');
-  }
-
-  // Request
-  public function addPatientAction($request)
-  {
-
-    $em = $this->getDoctrine()->getManager();
-    $patient = new Patient();
-    // get doctor form
-    $firstname_doc = $request->get("firstname_doc");
-    $name_doc = $request->get("name_doc");
-    $mail = $request->get("mail");
-    $cardio = $request->get("cardio");
-    $specialite = $request->get("specialite");
-    $mail_doc = $request->get("mail_doc");
-
-    $doctor = new Doctor();
-    $doctor->setFirstnameDoc($firstname_doc);
-    $doctor->setNameDoc($name_doc);
-    $doctor->setMail($mail);
-    $doctor->setCardio($cardio);
-    $doctor->setSpecialite($specialite);
-    $doctor->setMailDoc($mail_doc);
-    $patient->setDoctor($doctor);
-    $em->persist($doctor);
-
-    $aspirine = $request->get("aspirine");
-    $thieno = $request->get("thieno");
-    $avk = $request->get("avk");
-    $naco = $request->get("naco");
-    $aucun = $request->get("aucun");
-    $contre_eto = $request->get("contre_eto");
-    $filtre_cave = $request->get("filtre_cave");
-
     $traitement = new Traitement();
-    $aspirine == null ? $traitement->setAspirine(0) : $traitement->setAspirine(1);
-    $thieno == null ? $traitement->setThieno(0) : $traitement->setThieno(1);
-    $avk == null ? $traitement->setAvk(0) : $traitement->setAvk(1);
-    $naco == null ? $traitement->setNaco(0) : $traitement->setNaco(1);
-    $aucun == null ? $traitement->setAucun(0) : $traitement->setAucun(1);
-    $contre_eto == null ? $traitement->setContreEto(0) : $traitement->setContreEto(1);
-    $filtre_cave == null ? $traitement->setFiltreCave(0) : $traitement->setFiltreCave(1);
-    $patient->setTraitement($traitement);
-    $em->persist($traitement);
 
-    $cha = new Cha();
-    $insu_cardiaque = $request->get("insu_cardiaque");
-    $hta = $request->get("hta");
-    $age = $request->get("age");
-    $diabete = $request->get("diabete");
-    $atcd = $request->get("atcd");
-    $vasculaire = $request->get("vasculaire");
-    $age_tranche = $request->get("age_tranche");
-    $femme = $request->get("femme");
+      $traitement->setAspirine($request->get('aspirine') == null ? 0 : 1);
+      $traitement->setThieno($request->get('thieno') == null ? 0 : 1);
+      $traitement->setAvk($request->get('avk') == null ? 0 : 1);
+      $traitement->setNaco($request->get('naco') == null ? 0 : 1);
+      $traitement->setAucun($request->get('aucun') == null ? 0 : 1);
+      $traitement->setContreEto($request->get('contre_eto') == null ? 0 : 1);
+      $traitement->setFiltreCave($request->get('filtre_cave') == null ? 0 : 1);
 
-    $insu_cardiaque == null ? $cha->setInsuCardiaque(0) : $cha->setInsuCardiaque(1);
-    $hta == null ? $cha->setHta(0) : $cha->setHta(1);
-    $age == null ? $cha->setAge(0) : $cha->setAge(1);
-    $diabete == null ? $cha->setDiabete(0) : $cha->setDiabete(1);
-    $atcd == null ? $cha->setAtcd(0) : $cha->setAtcd(1);
-    $vasculaire == null ? $cha->setVasculaire(0) : $cha->setVasculaire(1);
-    $age_tranche == null ? $cha->setAgeTranche(0) : $cha->setAgeTranche(1);
-    $femme == null ? $cha->setFemme(0) : $cha->setFemme(1);
-    $patient->setCha($cha);
-    $em->persist($cha);
-
-    $has = new Has();
-    $hta_has = $request->get("hta_has");
-    $insu_hepatique = $request->get("insu-hepatique");
-    $insu_renale = $request->get("insu_renale");
-    $ait_avc = $request->get("ait_avc");
-    $saignement = $request->get("saignement");
-    $inr = $request->get("inr");
-    $age_has = $request->get("age_has");
-    $alcool = $request->get("alcool");
-    $ains = $request->get("ains");
-
-    $hta_has == null ? $has->setHtaHas(0) : $has->setHtaHas(1);
-    $insu_hepatique == null ? $has->setInsuHepatique(0) : $has->setInsuHepatique(1);
-    $insu_renale == null ? $has->setInsuRenale(0) : $has->setInsuRenale(1);
-    $ait_avc == null ? $has->setAitAvc(0) : $has->setAitAvc(1);
-    $saignement == null ? $has->setSaignement(0) : $has->setSaignement(1);
-    $inr == null ? $has->setInr(0) : $has->setInr(1);
-    $age_has == null ? $has->setAgeHas(0) : $has->setAgeHas(1);
-    $alcool == null ? $has->setAlcool(0) : $has->setAlcool(1);
-    $ains == null ? $has->setAins(0) : $has->setAins(1);
-    $patient->setHas($has);
-    $em->persist($has);
-
-    $neuro_hemo = $request->get("neuro_hemo");
-    $firstname = $request->get("firstname");
-    $name = $request->get("name");
-    $date = $request->get("birthday");
-    $birthday = date_create_from_format('Y-m-d', $date);
-    $codePatient = "codePatient";
-    $patient->setCodePatient($codePatient);
-    $patient->setFirstname($firstname);
-    $patient->setName($name);
-    $patient->setBirthday($birthday);
-    $patient->setNeuroHemo($neuro_hemo);
-
-
-
-    $em->persist($patient);
-
-    $this->getRandomCodePatient($patient);
+      $patient->setTraitement($traitement);
   }
 
-
-  function getRandomCodePatient($patient)
+  public function setChaDatas(Request $request, Patient $patient)
   {
-    $em = $this->getDoctrine()->getManager();
-    $length = 10;
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $codePatient = '';
-    for ($i = 0; $i < $length; $i++) {
-        $codePatient .= $characters[rand(0, $charactersLength - 1)];
-    }
-    $patient->setCodePatient($codePatient);
-    dump($patient);
+      $cha = new Cha();
 
-    $em->persist($patient);
-    // $em->flush();
+      $cha->setInsuCardiaque($request->get('insu_cardiaque') == null ? 0 : 1);
+      $cha->setHta($request->get('hta') == null ? 0 : 1);
+      $cha->setAge($request->get('age') == null ? 0 : 1);
+      $cha->setDiabete($request->get('diabete') == null ? 0 : 1);
+      $cha->setAtcd($request->get('atcd') == null ? 0 : 1);
+      $cha->setVasculaire($request->get('vasculaire') == null ? 0 : 1);
+      $cha->setAgeTranche($request->get('age_tranche') == null ? 0 : 1);
+      $cha->setFemme($request->get('femme') == null ? 0 : 1);
+
+      $patient->setCha($cha);
   }
+
+  public function setHasDatas(Request $request, Patient $patient)
+  {
+      $has = new Has();
+
+      $has->setHtaHas($request->get('hta_has') == null ? 0 : 1);
+      $has->setInsuHepatique($request->get('insu_hepatique') == null ? 0 : 1);
+      $has->setInsuRenale($request->get('insu_renale') == null ? 0 : 1);
+      $has->setAitAvc($request->get('ait_avc') == null ? 0 : 1);
+      $has->setSaignement($request->get('saignement') == null ? 0 : 1);
+      $has->setInr($request->get('inr') == null ? 0 : 1);
+      $has->setAgeHas($request->get('age_has') == null ? 0 : 1);
+      $has->setAlcool($request->get('alcool') == null ? 0 : 1);
+      $has->setAins($request->get('ains') == null ? 0 : 1);
+
+      $patient->setHas($has);
+
+  }
+
+  public function randomCodePatient($length = 10)
+  {
+      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $charactersLength = strlen($characters);
+      $randomString = '';
+      for ($i = 0; $i < $length; $i++) {
+          $randomString .= $characters[rand(0, $charactersLength - 1)];
+      }
+      return $randomString;
+  }
+
 
 
 }

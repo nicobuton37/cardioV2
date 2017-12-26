@@ -4,22 +4,6 @@ index:
     path:     /
     defaults: { _controller:FLFlfagBundle:Cardio:index }
 
-transit_doctor:
-    path:     /transitDoc
-    defaults: { _controller:FLFlfagBundle:Cardio:transitDoctor }
-
-transit_staff:
-    path:     /transitStaff
-    defaults: { _controller:FLFlfagBundle:Cardio:transitStaff }
-
-toDoctor:
-    path:     /doc/{patientId}/{staffId}
-    defaults: { _controller:FLFlfagBundle:Cardio:toDoctor }
-
 toStaff:
-    path:     /staff/{patientId}
+    path:     /toStaff/{codePatient}
     defaults: { _controller:FLFlfagBundle:Cardio:toStaff }
-
-archive:
-    path:     /archive/{patientId}/{staffId}
-    defaults: { _controller:FLFlfagBundle:Cardio:archive }

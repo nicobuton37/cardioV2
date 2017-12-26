@@ -221,7 +221,7 @@ class Patient
       $this->doctor = $doctor;
     }
 
-    public function getTraitment()
+    public function getTraitement()
     {
       return $this->traitement;
     }

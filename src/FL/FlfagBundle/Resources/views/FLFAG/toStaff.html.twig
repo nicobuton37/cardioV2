@@ -1,0 +1,71 @@
+{# src/FL/Flfag/Resources/FLFAG/toStaff.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+    <div class="panel panel-warning">
+        <div class="panel-heading">Récapitulatif</div>
+        <div class="panel-body">
+            <h2>Patient</h2>
+            {#{{ dump(patient) }}#}
+            <p>Mr {{ patient.firstname }} {{ patient.name }}</p>
+            <p>né le : {{ patient.birthday|date("d-m-Y") }}</p>
+            <p>Précisions sur l'histoire neurologique et hémorrogique : {{ patient.neuroHemo }}</p>
+            <h2>Médecin</h2>
+            <p>Dr {{ doctor.nameDoc }} {{ doctor.firstnameDoc }}</p>
+            <p>Spécialité : {{ doctor.specialite }}</p>
+            <p>Cardiologue référent : Dr {{ doctor.cardio }}</p>
+            <h2>Traitement</h2>
+            <p>{{ traitement.aspirine ? "Aspirine" : "" }}</p>
+            <p>{{ traitement.thieno ? "Thienopyridine" : "" }}</p>
+            <p>{{ traitement.avk ? "AVK" : "" }}</p>
+            <p>{{ traitement.naco ? "NACO" : "" }}</p>
+            <p>{{ traitement.aucun ? "Aucun" : "" }}</p>
+            <h2>Détails supplémentaires</h2>
+            <p>{{ traitement.contreEto ? "Contre Indication à l'ETO" : "" }}</p>
+            <p>{{ traitement.filtreCave ? "Filtre cave" : "" }}</p>
+            <h2>Score de risque CHA²DSVASc</h2>
+            <p>{{ cha.insuCardiaque ? "Insuffisance cardiaque(1)" : "" }}</p>
+            <p>{{ cha.hta ? "HTA(1)" : "" }}</p>
+            <p>{{ cha.age ? "Age >= 75 ans(2)" : "" }}</p>
+            <p>{{ cha.diabete ? "Diabète(1)" : "" }}</p>
+            <p>{{ cha.atcd ? "ATCD AIT ou AVC(2)" : "" }}</p>
+            <p>{{ cha.vasculaire ? "Maladie vasculaire(1)" : "" }}</p>
+            <p>{{ cha.ageTranche ? "Age 65-74 ans(1)" : "" }}</p>
+            <p>{{ cha.femme ? "Sexe féminin(1)" : "" }}</p>
+            <h3>Total : </h3>
+            <h2>Score de risque HASBLED</h2>
+            {#{{ dump(has) }}#}
+            <p>{{ has.htaHas ? "HTA(1)" : "" }}</p>
+            <p>{{ has.insuHepatique ? "Insuffisance hépatique(2)" : "" }}</p>
+            <p>{{ has.insuRenale ? "Insufisance rénale(1)" : "" }}</p>
+            <p>{{ has.aitAvc ? "ATCD AIT ou AVC(1)" : "" }}</p>
+            <p>{{ has.saignement ? "Saignement(1)" : "" }}</p>
+            <p>{{ has.inr ? "INR labile(2)" : "" }}</p>
+            <p>{{ has.ageHas ? "Age >= 65 ans(1)" : "" }}</p>
+            <p>{{ has.alcool ? "Alcool(1)" : "" }}</p>
+            <p>{{ has.ains ? "AINS(1)" : "" }}</p>
+            <h2>total : </h2>
+
+            <form action="index.html.twig" method="post">
+                <div class="form-group">
+                    <label for="docInfo">Envoyer à {{ doctor.mail }}</label>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="button" class="btn btn-danger right form-control" value="NON">
+                            <p>Supprime les données</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-success right form-control" value="OUI">
+                            <p>Envoyer au destinataire</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
