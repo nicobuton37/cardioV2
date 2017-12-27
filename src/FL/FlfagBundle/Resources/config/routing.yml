@@ -7,3 +7,7 @@ index:
 toStaff:
     path:     /toStaff/{codePatient}
     defaults: { _controller:FLFlfagBundle:Cardio:toStaff }
+
+staff:
+    path:     /staff/{codePatient}
+    defaults: { _controller:FLFlfagBundle:Staff:index }

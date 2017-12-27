@@ -47,24 +47,22 @@
             <p>{{ has.ains ? "AINS(1)" : "" }}</p>
             <h2>total : </h2>
 
-            <form action="index.html.twig" method="post">
-                <div class="form-group">
-                    <label for="docInfo">Envoyer à {{ doctor.mail }}</label>
-                    <div class="row">
+
+            <div class="form-group">
+                <label for="docInfo">Envoyer à {{ doctor.mail }}</label>
+                <div class="row">
+                    <form action="{{ path('index') }}">
                         <div class="col-sm-6">
-                            <input type="button" class="btn btn-danger right form-control" value="NON">
+                            <input type="submit" name="erase" class="btn btn-danger right form-control" value="NON">
                             <p>Supprime les données</p>
                         </div>
                         <div class="col-sm-6">
-                            <input type="submit" class="btn btn-success right form-control" value="OUI">
+                            <input type="submit" class="btn btn-success form-control" value="OUI">
                             <p>Envoyer au destinataire</p>
                         </div>
-                    </div>
-
+                    </form>
                 </div>
-
-            </form>
-
+            </div>
         </div>
     </div>
 

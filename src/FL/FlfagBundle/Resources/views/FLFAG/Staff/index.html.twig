@@ -1,0 +1,13 @@
+{# src/FL/FlfagBundle/Resources/views/FLFAG/Staff/index.html.twig #}
+
+{% extends "FLFlfagBundle::layout.html.twig" %}
+
+{% block body_doc %}
+    {% include 'FLFlfagBundle:FLFAG:formDoctor.html.twig' %}
+{% endblock %}
+
+{% block body_staff %}
+    {% if patient.name is not null %}
+        {% include 'FLFlfagBundle:FLFAG:formStaff.html.twig' %}
+    {% endif %}
+{% endblock %}

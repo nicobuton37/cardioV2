@@ -6,5 +6,7 @@
 {% endblock %}
 
 {% block body_staff %}
-  {% include 'FLFlfagBundle:FLFAG:formStaff.html.twig' %}
+    {% if patient.name is not null %}
+        {% include 'FLFlfagBundle:FLFAG:formStaff.html.twig' %}
+    {% endif %}
 {% endblock %}
