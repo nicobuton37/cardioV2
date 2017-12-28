@@ -1,0 +1,34 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+    <div class="panel panel-warning">
+        <div class="panel-heading">Récapitulatif</div>
+        <div class="panel-body">
+            <h2>Patient</h2>
+            {#{{ dump(patient) }}#}
+            <p>Mr {{ patient.firstname }} {{ patient.name }}</p>
+            <p>né le : {{ patient.birthday|date("d-m-Y") }}</p>
+
+            <h2>Staff</h2>
+            <p>date du staff : {{ staff.staffDate|date("d-m-Y") }}</p>
+
+
+            <div class="form-group">
+                <label for="docInfo">Envoyer à {{ doctor.mailDoc }}</label>
+                <div class="row">
+                    <form action="{{ path('index') }}">
+                        <div class="col-sm-6">
+                            <input type="submit" name="erase" class="btn btn-danger right form-control" value="NON">
+                            <p>Supprime les données</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-success form-control" value="OUI">
+                            <p>Envoyer au destinataire</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

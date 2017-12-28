@@ -20,7 +20,6 @@ class CardioController extends Controller
 // views
     public function indexAction(Request $request)
     {
-        dump($request->query->get('codePatient'));
         $create = false;
         $patient = new Patient();
         if ($request->isMethod('POST')) {

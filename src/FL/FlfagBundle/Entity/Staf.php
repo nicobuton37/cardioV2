@@ -13,15 +13,23 @@ use Doctrine\ORM\Mapping as ORM;
 class Staf
 {
     /**
-    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_close", cascade={"persist"})
-    *@ORM\JoinColumn(nullable=false)
-    */
+     *@var string
+     *
+     *@ORM\Column(name="codePatient", type="string", length=255)
+     *
+     */
+    private $codePatient;
+
+    /**
+     * @ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_close", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
     private $postClose;
 
     /**
-    *@ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_close", cascade={"persist"})
-    *@ORM\JoinColumn(nullable=false)
-    */
+     * @ORM\OneToOne(targetEntity="FL\FlfagBundle\Entity\Post_imp", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
     private $postImp;
 
     /**
@@ -170,21 +178,37 @@ class Staf
 
     public function getPostClose()
     {
-      return $this->postClose;
+        return $this->postClose;
     }
 
-    public function setPostClose(PostClose $postClose = null)
+    public function setPostClose(Post_close $postClose = null)
     {
-      $this->postClose = $postClose;
+        $this->postClose = $postClose;
     }
 
     public function getPostImp()
     {
-      return $this->postImp;
+        return $this->postImp;
     }
 
-    public function setPostImp(PostImp $postImp = null)
+    public function setPostImp(Post_imp $postImp = null)
     {
-      $this->postImp = $postImp;
+        $this->postImp = $postImp;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCodePatient()
+    {
+        return $this->codePatient;
+    }
+
+    /**
+     * @param mixed $codePatient
+     */
+    public function setCodePatient($codePatient)
+    {
+        $this->codePatient = $codePatient;
     }
 }

@@ -11,3 +11,7 @@ toStaff:
 staff:
     path:     /staff/{codePatient}
     defaults: { _controller:FLFlfagBundle:Staff:index }
+
+toDoctor:
+    path:     /toDoctor/{codePatient}
+    defaults: { _controller:FLFlfagBundle:Staff:toDoctor }

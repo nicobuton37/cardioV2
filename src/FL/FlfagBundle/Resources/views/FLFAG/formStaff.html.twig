@@ -1,6 +1,6 @@
 {# src/FL/FlfagBundle/Resources/views/FLFAG/formStaff.html.twig #}
 
-<form action="{{ path("index") }}" method="post">
+<form action="{{ codePatient }}" method="post">
   <div class="panel panel-info">
     <div class="panel-heading">
       Décision du staff
@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-6">
           <label for="close">Eligible à la fermeture :</label>
-          <div class="btn-group" data-toggle="buttons">
+          <div class="btn-group">
               <input type="radio" name="close" value="oui"> OUI
               <input type="radio" name="close" value="non"> NON
           </div>
