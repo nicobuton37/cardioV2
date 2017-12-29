@@ -49,9 +49,9 @@ class Staf
     private $staffDate;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="close", type="boolean")
+     * @ORM\Column(name="close", type="string", length=255)
      */
     private $close;
 
@@ -107,7 +107,7 @@ class Staf
     /**
      * Set close
      *
-     * @param boolean $close
+     * @param string $close
      *
      * @return Staf
      */
@@ -121,7 +121,7 @@ class Staf
     /**
      * Get close
      *
-     * @return bool
+     * @return string
      */
     public function getClose()
     {

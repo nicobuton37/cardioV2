@@ -1,5 +1,6 @@
 {# src/FL/FlfagBundle/Resources/views/FLFAG/formStaff.html.twig #}
 
+
 <form action="{{ codePatient }}" method="post">
   <div class="panel panel-info">
     <div class="panel-heading">
@@ -13,10 +14,8 @@
         </div>
         <div class="col-sm-6">
           <label for="close">Eligible à la fermeture :</label>
-          <div class="btn-group">
-              <input type="radio" name="close" value="oui"> OUI
-              <input type="radio" name="close" value="non"> NON
-          </div>
+              <input type="radio" name="close" value="oui" autocomplete="off"> OUI
+              <input type="radio" name="close" value="non" autocomplete="off"> NON
         </div>
       </div>
       <div class="row form-group">

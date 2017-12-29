@@ -17,13 +17,14 @@ class StaffController extends Controller
      */
     public function indexAction(Request $request, $codePatient)
     {
+        $create = true;
         $date = $request->get('staff_date');
         $staffDate = date_create_from_format('Y-m-d', $date);
         if ($request->isMethod("post")) {
             $staff = new Staf();
             $staff->setCodePatient($codePatient);
             $staff->setStaffDate($staffDate);
-            $staff->setClose($request->get('close') == null ? 0 : 1);
+            $staff->setClose($request->get('close'));
             $staff->setExamen($request->get('examen'));
             $staff->setPostOp($request->get('post_op'));
             $this->setPostImpDatas($request, $staff);
@@ -32,25 +33,33 @@ class StaffController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($staff);
             $em->flush();
-            dump($staff);
             return $this->redirectToRoute('toDoctor', array('codePatient' => $codePatient));
         } else {
+            $create = false;
             $patient = $this->getDoctrine()->getRepository("FLFlfagBundle:Patient")->findOneBy(array('codePatient' => $codePatient));
             $doctor = $this->getDoctrine()->getRepository("FLFlfagBundle:Doctor")->findOneBy(array('id' => $patient->getDoctor()));
             $traitement = $this->getDoctrine()->getRepository("FLFlfagBundle:Traitement")->findOneBy(array('id' => $patient->getTraitement()));
             $cha = $this->getDoctrine()->getRepository("FLFlfagBundle:Cha")->findOneBy(array('id' => $patient->getCha()));
             $has = $this->getDoctrine()->getRepository("FLFlfagBundle:Has")->findOneBy(array('id' => $patient->getHas()));
-            return $this->render("FLFlfagBundle:FLFAG/Staff:index.html.twig", array(
-                'codePatient' => $codePatient,
-                'patient' => $patient,
-                'doctor' => $doctor,
-                'traitement' => $traitement,
-                'cha' => $cha,
-                'has' => $has
-            ));
+            $staff = $this->getDoctrine()->getManager()->getRepository("FLFlfagBundle:Staf")->findOneBy(array('codePatient' => $codePatient));
+
         }
+        return $this->render("FLFlfagBundle:FLFAG/Staff:index.html.twig", array(
+            'codePatient' => $codePatient,
+            'patient' => $patient,
+            'doctor' => $doctor,
+            'traitement' => $traitement,
+            'cha' => $cha,
+            'has' => $has,
+            'staff' => $staff,
+            'create' => $create
+        ));
     }
 
+    /**
+     * @param $codePatient
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function toDoctorAction($codePatient)
     {
         $em = $this->getDoctrine()->getManager();

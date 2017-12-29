@@ -188,10 +188,11 @@ class CardioController extends Controller
      * @param $traitement
      * @param $has
      * @param $cha
+     * @param \Swift_Mailer $mailer
+     * @return void $mailer
      */
-    public function sendMail($patient, $doctor, $traitement, $has, $cha)
+    public function sendMail($patient, $doctor, $traitement, $has, $cha, \Swift_Mailer $mailer)
     {
-        $mailer = $this->container->get('mailer');
         $message = (new \Swift_Message('Fiche de mr ' . $patient->get('firstname')))
             ->setFrom($doctor->get('mail_doc'))
             ->setTo($doctor->get('mail'))
@@ -204,7 +205,7 @@ class CardioController extends Controller
                     'has' => $has
                 ))
             );
-        return $this->mailer->send($message);
+        $mailer->send($message);
     }
 
     /**
