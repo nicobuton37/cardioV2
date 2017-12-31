@@ -50,12 +50,8 @@ class CardioController extends Controller
                 return $this->redirectToRoute("toStaff", array('codePatient' => $codePatient));
 
             }
-
-
-
         }
         return $this->render("FLFlfagBundle:FLFAG/Doc:index.html.twig", array('create' => $create, 'patient' => $patient));
-
     }
 
     /**
@@ -72,6 +68,7 @@ class CardioController extends Controller
             $doctor = $em->getRepository("FLFlfagBundle:Doctor")->findOneBy(array("id" => $patient->getDoctor()));
             $traitement = $em->getRepository("FLFlfagBundle:Traitement")->findOneBy(array("id" => $patient->getTraitement()));
             $cha = $em->getRepository("FLFlfagBundle:Cha")->findOneBy(array('id' => $patient->getCha()));
+            $this->getTotalCha($cha);
             $has = $em->getRepository("FLFlfagBundle:Has")->findOneBy(array('id' => $patient->getHas()));
             return $this->render('FLFlfagBundle:FLFAG/Doc:toStaff.html.twig', array(
                 'patient' => $patient,
@@ -217,6 +214,16 @@ class CardioController extends Controller
         $patient = $em->getRepository("FLFlfagBundle:Patient")->findOneBy(array('codePatient' => $patient->get('codePatient')));
         $em->remove($patient);
         $em->flush();
+    }
+
+    /**
+     * @param $cha
+     */
+    public function getTotalCha($cha)
+    {
+        $scoreCha = $this->container->get('fl_flfag.transit');
+        $scoreCha->getScoreCha($cha);
+
     }
 
 }
