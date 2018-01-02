@@ -68,8 +68,8 @@ class CardioController extends Controller
             $doctor = $em->getRepository("FLFlfagBundle:Doctor")->findOneBy(array("id" => $patient->getDoctor()));
             $traitement = $em->getRepository("FLFlfagBundle:Traitement")->findOneBy(array("id" => $patient->getTraitement()));
             $cha = $em->getRepository("FLFlfagBundle:Cha")->findOneBy(array('id' => $patient->getCha()));
-            $this->getTotalCha($cha);
             $has = $em->getRepository("FLFlfagBundle:Has")->findOneBy(array('id' => $patient->getHas()));
+
             return $this->render('FLFlfagBundle:FLFAG/Doc:toStaff.html.twig', array(
                 'patient' => $patient,
                 'doctor' => $doctor,
@@ -128,17 +128,32 @@ class CardioController extends Controller
      */
     public function setChaDatas(Request $request, Patient $patient)
     {
+        $arr = array();
         $cha = new Cha();
 
         $cha->setInsuCardiaque($request->get('insu_cardiaque') == null ? 0 : 1);
+        $request->get('insu_cardiaque') == null ? "" : array_push($arr, $request->get('insu_cardiaque'));
+
         $cha->setHta($request->get('hta') == null ? 0 : 1);
+        $request->get('hta') == null ? "" : array_push($arr, $request->get('hta'));
+
         $cha->setAge($request->get('age') == null ? 0 : 1);
+        $request->get('age') == null ? "" : array_push($arr, $request->get('age'));
+
         $cha->setDiabete($request->get('diabete') == null ? 0 : 1);
+        $request->get('diabete') == null ? "" : array_push($arr, $request->get('diabete'));
+
         $cha->setAtcd($request->get('atcd') == null ? 0 : 1);
         $cha->setVasculaire($request->get('vasculaire') == null ? 0 : 1);
-        $cha->setAgeTranche($request->get('age_tranche') == null ? 0 : 1);
-        $cha->setFemme($request->get('femme') == null ? 0 : 1);
+        $request->get('vasculaire') == null ? "" : array_push($arr, $request->get('vasculaire'));
 
+        $cha->setAgeTranche($request->get('age_tranche') == null ? 0 : 1);
+        $request->get('age_tranche') == null ? "" : array_push($arr, $request->get('age_tranche'));
+
+        $cha->setFemme($request->get('femme') == null ? 0 : 1);
+        $request->get('femme') == null ? "" : array_push($arr, $request->get('femme'));
+
+//        $this->getTotalCha($arr);
         $patient->setCha($cha);
     }
 
@@ -148,20 +163,38 @@ class CardioController extends Controller
      */
     public function setHasDatas(Request $request, Patient $patient)
     {
+        $arr = array();
         $has = new Has();
 
         $has->setHtaHas($request->get('hta_has') == null ? 0 : 1);
+        $request->get('hta_has') == null ? "" : array_push($arr, $request->get('hta_has'));
+
         $has->setInsuHepatique($request->get('insu_hepatique') == null ? 0 : 1);
+        $request->get('insu_hepatique') == null ? "" : array_push($arr, $request->get('insu_hepatique'));
+
         $has->setInsuRenale($request->get('insu_renale') == null ? 0 : 1);
+        $request->get('insu_renale') == null ? "" : array_push($arr, $request->get('insu_renale'));
+
         $has->setAitAvc($request->get('ait_avc') == null ? 0 : 1);
+        $request->get('ait_avc') == null ? "" : array_push($arr, $request->get('ait_avc'));
+
         $has->setSaignement($request->get('saignement') == null ? 0 : 1);
+        $request->get('saignement') == null ? "" : array_push($arr, $request->get('saignement'));
+
         $has->setInr($request->get('inr') == null ? 0 : 1);
+        $request->get('inr') == null ? "" : array_push($arr, $request->get('inr'));
+
         $has->setAgeHas($request->get('age_has') == null ? 0 : 1);
+        $request->get('age_has') == null ? "" : array_push($arr, $request->get('age_has'));
+
         $has->setAlcool($request->get('alcool') == null ? 0 : 1);
+        $request->get('alcool') == null ? "" : array_push($arr, $request->get('alcool'));
+
         $has->setAins($request->get('ains') == null ? 0 : 1);
+        $request->get('ains') == null ? "" : array_push($arr, $request->get('ains'));
 
+//        $this->getTotalHas($arr);
         $patient->setHas($has);
-
     }
 
     /**
@@ -217,13 +250,40 @@ class CardioController extends Controller
     }
 
     /**
-     * @param $cha
+     * @param $arr
+     * @return Response
      */
-    public function getTotalCha($cha)
+    public function getTotalCha($arr)
     {
-        $scoreCha = $this->container->get('fl_flfag.transit');
-        $scoreCha->getScoreCha($cha);
+        $scoreCha = 0;
 
+        foreach ($arr as $value) {
+            if ($value == "insu_cardiaque" || $value == "hta" || $value == "diabete" ||
+            $value == "vasculaire" || $value == "age_tranche" || $value == "femme") {
+                $scoreCha += 1;
+            }else{
+                $scoreCha += 2;
+            }
+        }
+        return $this->render("FLFlfagBundle:FLFAG/Doc:toStaff.html.twig", array('scoreCha' => $scoreCha));
     }
 
+//    /**
+//     * @param $arr
+//     * @return Response
+//     */
+//    public function getTotalHas($arr)
+//    {
+//        $scoreHas = 0;
+//        foreach ($arr as $value) {
+//            if ($value == "hta_has" || $value == "insu_renale" || $value == "atcd" || $value == "saignement" ||
+//            $value == "age_has" || $value == "alcool") {
+//                $scoreHas += 1;
+//            }else{
+//                $scoreHas += 2;
+//            }
+//        }
+//        return $this->render("FLFlfagBundle:FLFAG/Doc:toStaff.html.twig", array('scoreHas' => $scoreHas));
+//
+//    }
 }

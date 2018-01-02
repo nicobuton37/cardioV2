@@ -25,7 +25,7 @@
             <p>{{ traitement.contreEto ? "Contre Indication à l'ETO" : "" }}</p>
             <p>{{ traitement.filtreCave ? "Filtre cave" : "" }}</p>
             <h2>Score de risque CHA²DSVASc</h2>
-            <p>{{ cha.insuCardiaque ? "Insuffisance cardiaque(1)" : "" }}</p>
+            <p>{{ cha.insuCardiaque ? "Insuffisance cardiaque(1)" : "" }} </p>
             <p>{{ cha.hta ? "HTA(1)" : "" }}</p>
             <p>{{ cha.age ? "Age >= 75 ans(2)" : "" }}</p>
             <p>{{ cha.diabete ? "Diabète(1)" : "" }}</p>
@@ -33,7 +33,7 @@
             <p>{{ cha.vasculaire ? "Maladie vasculaire(1)" : "" }}</p>
             <p>{{ cha.ageTranche ? "Age 65-74 ans(1)" : "" }}</p>
             <p>{{ cha.femme ? "Sexe féminin(1)" : "" }}</p>
-            <h3>Total : </h3>
+            <h3>Total : {{ scoreCha }}</h3>
             <h2>Score de risque HASBLED</h2>
             {#{{ dump(has) }}#}
             <p>{{ has.htaHas ? "HTA(1)" : "" }}</p>
