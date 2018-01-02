@@ -77,6 +77,13 @@ class Cha
      */
     private $femme;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="score", type="integer")
+     */
+    private $score;
+
 
     /**
      * Get id
@@ -278,6 +285,22 @@ class Cha
     public function getFemme()
     {
         return $this->femme;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param int $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
     }
 }
 

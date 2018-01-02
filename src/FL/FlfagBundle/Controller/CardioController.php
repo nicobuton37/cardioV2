@@ -153,7 +153,7 @@ class CardioController extends Controller
         $cha->setFemme($request->get('femme') == null ? 0 : 1);
         $request->get('femme') == null ? "" : array_push($arr, $request->get('femme'));
 
-//        $this->getTotalCha($arr);
+        $cha->setScore($this->getTotalCha($arr));
         $patient->setCha($cha);
     }
 
@@ -193,7 +193,7 @@ class CardioController extends Controller
         $has->setAins($request->get('ains') == null ? 0 : 1);
         $request->get('ains') == null ? "" : array_push($arr, $request->get('ains'));
 
-//        $this->getTotalHas($arr);
+        $has->setScore($this->getTotalHas($arr));
         $patient->setHas($has);
     }
 
@@ -251,7 +251,7 @@ class CardioController extends Controller
 
     /**
      * @param $arr
-     * @return Response
+     * @return int
      */
     public function getTotalCha($arr)
     {
@@ -265,25 +265,25 @@ class CardioController extends Controller
                 $scoreCha += 2;
             }
         }
-        return $this->render("FLFlfagBundle:FLFAG/Doc:toStaff.html.twig", array('scoreCha' => $scoreCha));
+        return $scoreCha;
     }
 
-//    /**
-//     * @param $arr
-//     * @return Response
-//     */
-//    public function getTotalHas($arr)
-//    {
-//        $scoreHas = 0;
-//        foreach ($arr as $value) {
-//            if ($value == "hta_has" || $value == "insu_renale" || $value == "atcd" || $value == "saignement" ||
-//            $value == "age_has" || $value == "alcool") {
-//                $scoreHas += 1;
-//            }else{
-//                $scoreHas += 2;
-//            }
-//        }
-//        return $this->render("FLFlfagBundle:FLFAG/Doc:toStaff.html.twig", array('scoreHas' => $scoreHas));
-//
-//    }
+    /**
+     * @param $arr
+     * @return int
+     */
+    public function getTotalHas($arr)
+    {
+        $scoreHas = 0;
+        foreach ($arr as $value) {
+            if ($value == "hta_has" || $value == "insu_renale" || $value == "atcd" || $value == "saignement" ||
+            $value == "age_has" || $value == "alcool") {
+                $scoreHas += 1;
+            }else{
+                $scoreHas += 2;
+            }
+        }
+        return $scoreHas;
+
+    }
 }

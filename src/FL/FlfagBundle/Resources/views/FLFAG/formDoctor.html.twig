@@ -210,54 +210,54 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <table class="table">
+                                <table class="table" id="cha">
                                     <th>Score de risque CHA²DSVASc</th>
                                     <tr>
                                         <td>Insuffisance cardiaque</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="insu_cardiaque"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="insu_cardiaque"
                                                    name="insu_cardiaque"></td>
                                     </tr>
                                     <tr>
                                         <td>HTA</td>
                                         <td class="score">1</td>
-                                        <td><input class="right" data-value="1" type="checkbox" value="hta"
+                                        <td><input class="right switch" data-value="1" type="checkbox" value="hta"
                                                    name="hta"></td>
                                     </tr>
                                     <tr>
                                         <td>Age >= 75 ans</td>
                                         <td class="score">2</td>
-                                        <td><input data-value="2" class="right" type="checkbox" value="age"
+                                        <td><input data-value="2" class="right switch" type="checkbox" value="age"
                                                    name="age"></td>
                                     </tr>
                                     <tr>
                                         <td>Diabète</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="diabete"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="diabete"
                                                    name="diabete"></td>
                                     </tr>
                                     <tr>
                                         <td>ATCD AIT ou AVC</td>
                                         <td class="score">2</td>
-                                        <td><input data-value="2" class="right" type="checkbox" value="atcd"
+                                        <td><input data-value="2" class="right switch" type="checkbox" value="atcd"
                                                    name="atcd"></td>
                                     </tr>
                                     <tr>
                                         <td>Maladie vasculaire</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="vasculaire"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="vasculaire"
                                                    name="vasculaire"></td>
                                     </tr>
                                     <tr>
                                         <td>Age 65-74 ans</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="age_tranche"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="age_tranche"
                                                    name="age_tranche"></td>
                                     </tr>
                                     <tr>
                                         <td>Sexe féminin</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="femme"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="femme"
                                                    name="femme"></td>
                                     </tr>
                                     <tr>
@@ -267,7 +267,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalCha" class="score">100</td>
+                                        <td id="totalCha" class="score">0</td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -278,60 +278,60 @@
                                     <tr>
                                         <td>HTA</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="hta_has"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="hta_has"
                                                    name="hta_has"></td>
                                     </tr>
                                     <tr>
                                         <td>Insuffisance hépatique</td>
                                         <td class="score">2</td>
-                                        <td><input data-value="2" class="right" type="checkbox" value="insu_hepatique"
+                                        <td><input data-value="2" class="right switch" type="checkbox" value="insu_hepatique"
                                                    name="insu_hepatique"></td>
                                     </tr>
                                     <tr>
                                         <td>Insufisance rénale</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="insu_renale"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="insu_renale"
                                                    name="insu_renale"></td>
                                     </tr>
                                     <tr>
                                         <td>ATCD AIT ou AVC</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="ait_avc"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="ait_avc"
                                                    name="ait_avc"></td>
                                     </tr>
                                     <tr>
                                         <td>Saignement</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="saignement"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="saignement"
                                                    name="saignement"></td>
                                     </tr>
                                     <tr>
                                         <td>INR labile</td>
                                         <td class="score">2</td>
-                                        <td><input data-value="2" class="right" type="checkbox" value="inr"
+                                        <td><input data-value="2" class="right switch" type="checkbox" value="inr"
                                                    name="inr"></td>
                                     </tr>
                                     <tr>
                                         <td>Age >= 65 ans</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="age_has"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="age_has"
                                                    name="age_has"></td>
                                     </tr>
                                     <tr>
                                         <td>Alcool</td>
                                         <td class="score">1</td>
-                                        <td><input data-value="1" class="right" type="checkbox" value="alcool"
+                                        <td><input data-value="1" class="right switch" type="checkbox" value="alcool"
                                                    name="alcool"></td>
                                     </tr>
                                     <tr>
                                         <td>AINS</td>
                                         <td class="score">2</td>
-                                        <td><input data-value="2" class="right" type="checkbox" value="ains"
+                                        <td><input data-value="2" class="right switch" type="checkbox" value="ains"
                                                    name="ains"></td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalHas" class="score">2000</td>
+                                        <td id="totalHas" class="score">0</td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -402,7 +402,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalCha" class="score">0</td>
+                                        <td id="totalCha" class="score">{{ cha.score }}</td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -469,7 +469,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalHas" class="score">0</td>
+                                        <td id="totalHas" class="score">{{ has.score }}</td>
                                         <td></td>
                                     </tr>
                                 </table>

@@ -8,6 +8,10 @@ toStaff:
     path:     /toStaff/{codePatient}
     defaults: { _controller:FLFlfagBundle:Cardio:toStaff }
 
+score:
+    path:     /toStaff/{codePatient}
+    defaults: { _controller:FLFlfagBundle:Cardio:getTotalCha }
+
 staff:
     path:     /staff/{codePatient}
     defaults: { _controller:FLFlfagBundle:Staff:index }
@@ -15,3 +19,4 @@ staff:
 toDoctor:
     path:     /toDoctor/{codePatient}
     defaults: { _controller:FLFlfagBundle:Staff:toDoctor }
+

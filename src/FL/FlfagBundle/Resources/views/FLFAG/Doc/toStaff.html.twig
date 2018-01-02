@@ -33,7 +33,7 @@
             <p>{{ cha.vasculaire ? "Maladie vasculaire(1)" : "" }}</p>
             <p>{{ cha.ageTranche ? "Age 65-74 ans(1)" : "" }}</p>
             <p>{{ cha.femme ? "Sexe féminin(1)" : "" }}</p>
-            <h3>Total : {{ scoreCha }}</h3>
+            <h3 id="totalCha">Total : {{ cha.score }}</h3>
             <h2>Score de risque HASBLED</h2>
             {#{{ dump(has) }}#}
             <p>{{ has.htaHas ? "HTA(1)" : "" }}</p>
@@ -45,7 +45,7 @@
             <p>{{ has.ageHas ? "Age >= 65 ans(1)" : "" }}</p>
             <p>{{ has.alcool ? "Alcool(1)" : "" }}</p>
             <p>{{ has.ains ? "AINS(1)" : "" }}</p>
-            <h2>total : </h2>
+            <h3 id="totalHas">total : {{ has.score }}</h3>
 
 
             <div class="form-group">

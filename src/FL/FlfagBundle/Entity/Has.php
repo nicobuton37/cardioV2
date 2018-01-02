@@ -84,6 +84,12 @@ class Has
      */
     private $ains;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="score", type="integer")
+     */
+    private $score;
 
     /**
      * Get id
@@ -309,6 +315,22 @@ class Has
     public function getAins()
     {
         return $this->ains;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * @param int $score
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
     }
 }
 
