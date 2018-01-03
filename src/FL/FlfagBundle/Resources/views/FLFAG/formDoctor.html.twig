@@ -267,13 +267,13 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalCha" class="score">0</td>
+                                        <td id="totalCha" class="total">0</td>
                                         <td></td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="col-sm-6">
-                                <table class="table">
+                                <table class="table" id="has">
                                     <th>Score de risque HASBLED</th>
                                     <tr>
                                         <td>HTA</td>
@@ -331,7 +331,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalHas" class="score">0</td>
+                                        <td id="totalHas" class="total">0</td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -342,7 +342,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <table class="table">
+                                <table class="table" id="cha">
                                     <th>Score de risque CHA²DSVASc</th>
                                     <tr>
                                         <td>Insuffisance cardiaque</td>
@@ -402,7 +402,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalCha" class="score">{{ cha.score }}</td>
+                                        <td class="total">{{ cha.score }}</td>
                                         <td></td>
                                     </tr>
                                 </table>
@@ -469,7 +469,7 @@
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td id="totalHas" class="score">{{ has.score }}</td>
+                                        <td class="total">{{ has.score }}</td>
                                         <td></td>
                                     </tr>
                                 </table>

@@ -11,8 +11,22 @@
 
             <h2>Staff</h2>
             <p>date du staff : {{ staff.staffDate|date("d-m-Y") }}</p>
-            <p></p>
+            <p>Eligible à la fermeture : {{ staff.close }}</p>
+            <p>Examens / Avis conditionnant la décision : {{ staff.examen }}</p>
+            <p>Gestion prévisible et durée du traitement AAP / AVK en post-op : {{ staff.postOp }}</p>
+            <h2>Examens à programmer avant fermeture</h2>
+            <p>{{ postClose.anesthesie == null ? "" : "Cs anesthésie" }}</p>
+            <p>{{ postClose.etoClose == null ? "" : "ETO" }}</p>
+            <p>{{ postClose.tdmCoeur == null ? "" : "TDM coeur" }}</p>
+            <p>{{ postClose.tdmCerebral == null ? "" :  "TDM cérébral / IRM" }}</p>
+            <p>{{ postClose.geriatrique == null ? "" : "Avis gériatrique" }}</p>
 
+            <h2>Suivi post implantation</h2>
+            <p>ETO : {{ postImp.etoImp }}</p>
+            <p>ETT : {{ postImp.ettImp }}</p>
+            <p>Scanner cardiaque : {{ postImp.scanner }}</p>
+            <p>Cs neuro : {{ postImp.csNeuro }}</p>
+            <p>Cs cardio : {{ postImp.csCardio }}</p>
             <div class="form-group">
                 <label for="docInfo">Envoyer à {{ doctor.mailDoc }}</label>
                 <div class="row">

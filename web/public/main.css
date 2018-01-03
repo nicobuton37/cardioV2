@@ -58,3 +58,17 @@ td, th {
 tr .empty {
   background: #c7c9cc;
 }
+
+/* total case */
+
+.total {
+    background: #0088CC;
+    opacity: 0.5;
+    color: #FFFFFF;
+    border-left: 1px solid #c7c9cc;
+    border-right: 1px solid #c7c9cc;
+    border-bottom: 1px solid #c7c9cc;
+    text-align: center;
+    font-weight: bold;
+    height: 20px;
+}
